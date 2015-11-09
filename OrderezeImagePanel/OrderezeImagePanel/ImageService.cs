@@ -15,7 +15,7 @@ namespace OrderezeImagePanel
         {
             var blobclient = bsf.blobClientConnect("StorageConnectionString");
             var blobcontainer = bsf.blobGetContainerRef(blobclient, "imagecontainer");
-            var blob = bsf.blobGetBlobRef(blobcontainer, Path.GetFileName(image.ImagePath));
+            var blob = bsf.blobGetBlobRef(blobcontainer, image.Id.ToString());
 
 
             string imageContentType = System.Web.MimeMapping.GetMimeMapping(image.ImagePath);
