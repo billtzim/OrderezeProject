@@ -43,8 +43,17 @@ namespace OrderezeImagePanel
 
         private void UpdateFileList()
         {
-            fileView.DataSource = imgsrv.GetImages();
+            //OrderezeTask.Image image = new OrderezeTask.Image();
+            List<ListItem> imagelist = new List<ListItem>();
+
+            foreach (OrderezeTask.Image image in imgsrv.GetImages())
+            {
+                imagelist.Add(new ListItem(image.Name, image.Id.ToString()));
+            }
+
+            fileView.DataSource = imagelist;
             fileView.DataBind();
+
         }
 
         protected void RowCommandHandler(object sender, GridViewCommandEventArgs e)
