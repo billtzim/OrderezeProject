@@ -27,11 +27,6 @@ namespace OrderezeImagePanel
 
         public List<Image> GetImages()
         {
-            //var blobclient = bsf.blobClientConnect("StorageConnectionString");
-            //var blobcontainer = bsf.blobGetContainerRef(blobclient, "imagecontainer");
-
-
-            //return bsf.getBlobFiles();
             return dsf.getImagesFromDB();
         }
     }

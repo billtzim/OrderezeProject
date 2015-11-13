@@ -62,11 +62,6 @@ namespace OrderezeImagePanel
                 blob.UploadFromStream(fileStream);
             }
 
-            //blob.Metadata.Add("id", imageforupload.Id.ToString());
-            //blob.Metadata.Add("name", imageforupload.Name);
-            //blob.Metadata.Add("description", imageforupload.Description);
-            //blob.SetMetadata();
-
             blob.Properties.ContentType = System.Web.MimeMapping.GetMimeMapping(imageforupload.ImagePath);
             blob.SetProperties();
 

@@ -9,7 +9,6 @@ namespace OrderezeImagePanel
 {
     public class DatabaseStorageFunctions
     {
-        //string connstring = @"Data Source = (LocalDB)\MSSQLLocalDB;AttachDbFilename='C:\Users\Vasileios Tzimourtos\Documents\GitHubVisualStudio\orderimage\OrderezeImagePanel\OrderezeImagePanel\App_Data\imagesDatabase.mdf';Integrated Security = True";
         string connstring = ConfigurationManager.AppSettings["dbconnstring"].ToString();
 
         public int insertImageToDb(OrderezeTask.Image image)
@@ -22,8 +21,6 @@ namespace OrderezeImagePanel
                 CmdSql.Parameters.AddWithValue("@Description", image.Description);
                 CmdSql.Parameters.AddWithValue("@Imagepath", image.ImagePath);
 
-                //CmdSql.Parameters["id"].Direction = System.Data.ParameterDirection.Output;
-                //CmdSql.ExecuteNonQuery();
                 object newimageid = CmdSql.ExecuteScalar();
                 conn.Close();
 
@@ -42,15 +39,12 @@ namespace OrderezeImagePanel
                 CmdSql.ExecuteNonQuery();
 
                 SqlDataReader myReader = CmdSql.ExecuteReader();
-                //while (myReader.Read())
 
                 myReader.Read();
                 string imagepath = myReader["imagepath"].ToString();
 
                 CmdSql.CommandText = "DELETE FROM [imagesTable] WHERE ID=@ID;";
-                //SqlCommand CmdSql = new SqlCommand("DELETE FROM [imagesTable] WHERE ID=@ID;", conn);
                 myReader.Close();
-                //CmdSql.Parameters.AddWithValue("@ID", id);
                 CmdSql.ExecuteNonQuery();
 
                 conn.Close();
