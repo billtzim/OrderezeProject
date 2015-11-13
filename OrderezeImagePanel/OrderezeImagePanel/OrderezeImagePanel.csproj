@@ -94,6 +94,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\imagesDatabase.mdf" />
+    <Content Include="App_Data\imagesDatabase_log.ldf">
+      <DependentUpon>imagesDatabase.mdf</DependentUpon>
+    </Content>
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -108,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlobStorageFunctions.cs" />
+    <Compile Include="DatabaseStorageFunctions.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

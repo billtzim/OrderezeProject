@@ -1,6 +1,10 @@
 ﻿using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using OrderezeTask;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 
 namespace OrderezeImagePanel
 {
@@ -17,6 +21,7 @@ namespace OrderezeImagePanel
         {
             // Retrieve reference to a previously created container.
             CloudBlobContainer container = blobclient.GetContainerReference(containerName);
+
             container.CreateIfNotExists();
             container.SetPermissions(
                 new BlobContainerPermissions
@@ -47,5 +52,57 @@ namespace OrderezeImagePanel
             blob.Metadata.Add(metadataKey, metadataValue);
         }
 
+        public string uploadFileToBlob(OrderezeTask.Image imageforupload)
+        {
+            var blobcontainer = blobGetContainerRef(blobClientConnect("StorageConnectionString"), "imagecontainer");
+            var blob = blobGetBlobRef(blobcontainer, Guid.NewGuid().ToString()+Path.GetExtension(imageforupload.ImagePath));
+
+            using (var fileStream = System.IO.File.OpenRead(imageforupload.ImagePath))
+            {
+                blob.UploadFromStream(fileStream);
+            }
+
+            //blob.Metadata.Add("id", imageforupload.Id.ToString());
+            //blob.Metadata.Add("name", imageforupload.Name);
+            //blob.Metadata.Add("description", imageforupload.Description);
+            //blob.SetMetadata();
+
+            blob.Properties.ContentType = System.Web.MimeMapping.GetMimeMapping(imageforupload.ImagePath);
+            blob.SetProperties();
+
+            return blob.Uri.ToString();
+        }
+
+        public List<Image> getBlobFiles()
+        {
+            List<Image> imageList = new List<Image>();
+            var blobcontainer = blobGetContainerRef(blobClientConnect("StorageConnectionString"), "imagecontainer");
+            
+            foreach (var blobItem in blobcontainer.ListBlobs())
+            {
+                var aBlob = blobGetBlobRef(blobcontainer, blobItem.Uri.AbsoluteUri);
+                aBlob.FetchAttributes();
+
+                imageList.Add(new Image()
+                {
+                    Id = int.Parse(aBlob.Metadata["id"]),
+                    Name = aBlob.Metadata["name"],
+                    Description = aBlob.Metadata["description"],
+                    ImagePath = aBlob.Uri.AbsoluteUri
+                });
+            }
+
+            return imageList;
+
+        }
+
+        public void deleteBlobFile(string bloburi)
+        {
+            var blobcontainer = blobGetContainerRef(blobClientConnect("StorageConnectionString"), "imagecontainer");
+            var blob = blobGetBlobRef(blobcontainer, bloburi);
+
+            blob.DeleteIfExists();
+
+        }
     }
 }
