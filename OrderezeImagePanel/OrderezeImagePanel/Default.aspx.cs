@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 namespace OrderezeImagePanel
 {
-    public partial class Default : System.Web.UI.Page
+    public partial class Default : Page
     {
         ImageService imgsrv = new ImageService();
         //List<OrderezeTask.Image> imagesList = new List<OrderezeTask.Image>();
@@ -61,39 +61,21 @@ namespace OrderezeImagePanel
 
         }
 
-//        protected void DeleteFile(object sender, EventArgs e)
-//       {
-//            int imageid = int.Parse((sender as LinkButton).CommandArgument);
-//            imgsrv.DeleteImage(imageid);
-//            Response.Redirect(Request.Url.AbsoluteUri);
+//        protected void DownloadFile(object sender, EventArgs e)
+//        {
+//            string fileuriPath = (sender as LinkButton).CommandArgument;
+//            Response.ContentType = ContentType;
+//            Response.AppendHeader("Content-Disposition", "attachment; filename=" + fileuriPath);
+//            Response.WriteFile(fileuriPath);
+//            Response.End();
 //        }
 
 
-        protected void DownloadFile(object sender, EventArgs e)
-        {
-            string fileuriPath = (sender as LinkButton).CommandArgument;
-            Response.ContentType = ContentType;
-            Response.AppendHeader("Content-Disposition", "attachment; filename=" + fileuriPath);
-            Response.WriteFile(fileuriPath);
-            Response.End();
-        }
-
-
-        protected void RowCommandHandler(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName == "DeleteImageById")
-            {
-                imgsrv.DeleteImage(int.Parse(e.CommandArgument.ToString()));
-            }
-
-            // Update the UI
-            UpdateFileList();
-        }
-
         protected void DeleteButton_Click(object sender, EventArgs e)
         {
-            int test = int.Parse((sender as LinkButton).Text); // .CommandArgument;
+            int test = int.Parse((sender as LinkButton).Text);
             imgsrv.DeleteImage(int.Parse((sender as LinkButton).Text));
+            UpdateFileList();
         }
     }
 }

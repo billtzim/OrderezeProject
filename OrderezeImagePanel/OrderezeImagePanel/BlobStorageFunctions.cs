@@ -99,7 +99,7 @@ namespace OrderezeImagePanel
         public void deleteBlobFile(string bloburi)
         {
             var blobcontainer = blobGetContainerRef(blobClientConnect("StorageConnectionString"), "imagecontainer");
-            var blob = blobGetBlobRef(blobcontainer, bloburi);
+            var blob = blobGetBlobRef(blobcontainer, Path.GetFileName(bloburi));
 
             blob.DeleteIfExists();
 
