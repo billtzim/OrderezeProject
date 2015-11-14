@@ -30,7 +30,7 @@
                 </asp:ImageField>
                 <asp:TemplateField HeaderText="Delete" ShowHeader="False">
                     <ItemTemplate>
-                        <asp:LinkButton runat="server" Text='<%# Eval("id") %>' CommandName="DeleteImageById" CausesValidation="false" ID="LinkButton1" OnClick="DeleteButton_Click"></asp:LinkButton>
+                        <asp:LinkButton runat="server" Text='Delete' CommandArgument='<%# Eval("id") %>' CausesValidation="false" ID="LinkButton1" OnClick="DeleteButton_Click"></asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
 

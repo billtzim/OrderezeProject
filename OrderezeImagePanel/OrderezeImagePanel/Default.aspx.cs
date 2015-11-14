@@ -47,8 +47,7 @@ namespace OrderezeImagePanel
 
         protected void DeleteButton_Click(object sender, EventArgs e)
         {
-            int test = int.Parse((sender as LinkButton).Text);
-            imgsrv.DeleteImage(int.Parse((sender as LinkButton).Text));
+            imgsrv.DeleteImage(int.Parse((sender as LinkButton).CommandArgument));
             UpdateFileList();
         }
     }

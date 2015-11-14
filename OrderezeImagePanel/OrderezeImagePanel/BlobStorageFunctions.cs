@@ -21,7 +21,7 @@ namespace OrderezeImagePanel
         {
             // Retrieve reference to a previously created container.
             CloudBlobContainer container = blobclient.GetContainerReference(containerName);
-
+            //blobclient.RetryPolicy.ShouldRetry(2,404);
             container.CreateIfNotExists();
             container.SetPermissions(
                 new BlobContainerPermissions
